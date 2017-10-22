@@ -11,10 +11,23 @@
 #include "inverters.h"
 #include "utils.h"
 
+//Last inverter
+Inverter *last_inverter = NULL;
+
 //Add an inverter to the list
 void inverter_add(const char *url, const char *name){
 
-    printf("Add inverter \"%s\" with url \"%s\" to the list...\n", name, url);
+    //Create inverter object
+    Inverter inverter;
+
+    //First, we must retrieve URL informations
+    if(extract_url_informations(url, inverter.hostname, inverter.path, &inverter.port) != 0)
+        report_error("An error occured while retrieving URL informations !", 1);
+
+    if(inverter.hostname == NULL)
+    exit(EXIT_FAILURE);
+    //printf("URL infos : http://%s", inverter.hostname);
+    printf("URL infos : http://%s:%d%s\n", inverter.hostname, inverter.port, inverter.path);
 
 }
 
@@ -122,7 +135,7 @@ int inverter_parse_config(const char *config){
         }
 
         //Check if we got all the values
-        if(strlen(url) > 2 & strlen(name) > 2)
+        if(strlen(url) > 2 && strlen(name) > 2)
 
             //Add the inverter to the list
             inverter_add(url, name);

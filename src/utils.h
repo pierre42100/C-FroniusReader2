@@ -35,4 +35,15 @@ char* get_file_contents(const char *filename);
  */
 int json_check_key(const char *name, const char *json, jsmntok_t *token);
 
+/**
+ * Extract URL informations
+ *
+ * @param const char *src_url The URL to process
+ * @param char **hostname Hostname
+ * @param char **path Path
+ * @param int **port Port
+ * @return int 0 on success / -1 on failure
+ */
+int extract_url_informations(const char *src_url, char *hostname, char *path, int *port);
+
 #endif // UTILS_H_INCLUDED

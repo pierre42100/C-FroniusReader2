@@ -14,9 +14,15 @@ typedef struct Inverter {
 
     //URL endpoint of the inverter
     char *url;
+    char hostname[25];
+    char path[150];
+    int port;
 
     //Current production
     int production;
+
+    //Last inverter of the list
+    struct Inverter *last_inverter;
 
 } Inverter;
 

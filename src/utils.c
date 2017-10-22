@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <string.h>
+#include "lib/jsmn/jsmn.h"
 
 //Report error
 void report_error(const char *message, int quit){
@@ -62,4 +64,16 @@ char* get_file_contents(const char *filename){
 
     //Return result
     return response;
+}
+
+//Check two JSON keys
+int json_check_key(const char *name, const char *json, jsmntok_t *token){
+
+    return (
+        token->type == JSMN_STRING &&
+        (int) strlen(name) == token->end - token->start &&
+        strncmp(name, json + token->start, token->end - token->start) == 0
+
+    ) ? 0 : -1;
+
 }

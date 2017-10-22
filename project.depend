@@ -1,9 +1,11 @@
 # depslib dependency file v1.0
-1508656812 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.c
+1508673963 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.c
 	<stdio.h>
 	<stdlib.h>
 	<fcntl.h>
 	<unistd.h>
+	<string.h>
+	"lib/jsmn/jsmn.h"
 
 1508665878 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/main.c
 	<stdio.h>
@@ -14,7 +16,8 @@
 
 1508656140 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/config.h
 
-1508656084 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.h
+1508673714 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.h
+	"lib/jsmn/jsmn.h"
 
 1493628247 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/lib/jsmn/jsmn.c
 	"jsmn.h"
@@ -23,4 +26,12 @@
 	<stddef.h>
 
 1508665829 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/inverters.h
+
+1508674604 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/inverters.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lib/jsmn/jsmn.h"
+	"inverters.h"
+	"utils.h"
 

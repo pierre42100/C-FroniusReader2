@@ -7,4 +7,9 @@
  * @author Pierre HUBERT
  */
 
+/**
+ * Path to inverters configuration
+ */
+#define PATH_CONFIG_INVERTERS "config.json"
+
 #endif // CONFIG_H_INCLUDED

@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1508656527 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.c
+	<stdio.h>
+	<stdlib.h>
+	<fcntl.h>
+
+1508655805 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/main.c
+	<stdio.h>
+	<stdlib.h>
+	"config.h"
+	"utils.h"
+
+1508656140 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/config.h
+
+1508656084 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.h
+

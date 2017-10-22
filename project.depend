@@ -1,10 +1,11 @@
 # depslib dependency file v1.0
-1508656527 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.c
+1508656812 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.c
 	<stdio.h>
 	<stdlib.h>
 	<fcntl.h>
+	<unistd.h>
 
-1508655805 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/main.c
+1508656972 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/main.c
 	<stdio.h>
 	<stdlib.h>
 	"config.h"
@@ -13,4 +14,10 @@
 1508656140 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/config.h
 
 1508656084 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.h
+
+1493628247 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/lib/jsmn/jsmn.c
+	"jsmn.h"
+
+1493628247 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/lib/jsmn/jsmn.h
+	<stddef.h>
 

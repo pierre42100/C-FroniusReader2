@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "config.h"
 #include "utils.h"
+#include "inverters.h"
 
 int main(int argc,char *argv[]){
 
@@ -16,5 +17,11 @@ int main(int argc,char *argv[]){
     //First, we must parse the configuration
     //Get the configuration content
     char *config_content = get_file_contents(PATH_CONFIG_INVERTERS);
+
+    //Parse the configuration
+    inverter_parse_config(config_content);
+
+    //Remove configuration string
+    free(config_content);
 
 }

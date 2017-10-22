@@ -10,15 +10,23 @@
 typedef struct Inverter {
 
     //Name of the inverter
-    *char name;
+    char *name;
 
     //URL endpoint of the inverter
-    *char url;
+    char *url;
 
     //Current production
     int production;
 
 } Inverter;
+
+/**
+ * Add an inverter to the list
+ *
+ * @param const char *url The URL pointing on the inverter
+ * @param const char *name Then name of the inverter
+ */
+void inverter_add(const char *url, const char *name);
 
 
 /**

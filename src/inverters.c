@@ -18,16 +18,39 @@ Inverter *last_inverter = NULL;
 void inverter_add(const char *url, const char *name){
 
     //Create inverter object
-    Inverter inverter;
+    Inverter *inverter = NULL;
+    inverter = malloc(sizeof(Inverter));
+    if(inverter == NULL)
+        report_error("Couldn't allocate memory to store a new inverter!", 1);
+
 
     //First, we must retrieve URL informations
-    if(extract_url_informations(url, inverter.hostname, inverter.path, &inverter.port) != 0)
+    if(extract_url_informations(url, inverter->hostname, inverter->path, &inverter->port) != 0)
         report_error("An error occured while retrieving URL informations !", 1);
 
-    if(inverter.hostname == NULL)
-    exit(EXIT_FAILURE);
-    //printf("URL infos : http://%s", inverter.hostname);
-    printf("URL infos : http://%s:%d%s\n", inverter.hostname, inverter.port, inverter.path);
+    //Inform user
+    printf("URL of the new inverter (%s): http://%s:%d%s\n", name, inverter->hostname, inverter->port, inverter->path);
+
+    //Copy inverter name
+    inverter->name = NULL;
+    inverter->name = malloc(sizeof(char)*(strlen(name)+1));
+    if(inverter->name == NULL)
+        report_error("Couldn't allocate memory to store an inverter name!",1);
+
+    //Copy invert URL
+    inverter->url = NULL;
+    inverter->url = malloc(sizeof(char)*(strlen(url)+1));
+    if(inverter->url == NULL)
+        report_error("Couldn't allocate memory to store an inverter URL!",1);
+
+    //By default, the production is set to 0
+    inverter->production = 0;
+
+    //Save the pointer of the last inverter
+    inverter->last_inverter = last_inverter;
+
+    //Replace the pointer on the last inverter with the pointer of the current inverter
+    last_inverter = inverter;
 
 }
 

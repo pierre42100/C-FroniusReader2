@@ -36,12 +36,14 @@ void inverter_add(const char *url, const char *name){
     inverter->name = malloc(sizeof(char)*(strlen(name)+1));
     if(inverter->name == NULL)
         report_error("Couldn't allocate memory to store an inverter name!",1);
+    strcpy(inverter->name, name);
 
     //Copy invert URL
     inverter->url = NULL;
     inverter->url = malloc(sizeof(char)*(strlen(url)+1));
     if(inverter->url == NULL)
         report_error("Couldn't allocate memory to store an inverter URL!",1);
+    strcpy(inverter->url, url);
 
     //By default, the production is set to 0
     inverter->production = 0;
@@ -179,4 +181,24 @@ int inverter_parse_config(const char *config){
 
     //The operation is a success
     return 0;
+}
+
+//Refresh the informations of all the inverters
+void inverter_refresh_all(){
+    //Process all the list of currently installed inverters
+    Inverter *current_inverter = last_inverter;
+
+    while(current_inverter != NULL){
+        //Refresh inverter
+        inverter_refresh(current_inverter);
+
+        //Go to the next inverter
+        current_inverter = current_inverter->last_inverter;
+    }
+}
+
+//Refresh production informations of a specified inverter
+void inverter_refresh(Inverter *inverter){
+    //Inform user
+    printf("Refreshing production informations of %s.\n", inverter->name);
 }

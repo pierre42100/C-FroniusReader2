@@ -24,4 +24,10 @@ int main(int argc,char *argv[]){
     //Remove configuration string
     free(config_content);
 
+    //Inform user
+    printf("The application is ready.\n");
+
+    //Refresh the procution informations of all the inverters
+    inverter_refresh_all();
+
 }

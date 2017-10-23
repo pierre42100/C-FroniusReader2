@@ -43,4 +43,16 @@ void inverter_add(const char *url, const char *name);
  */
 int inverter_parse_config(const char *config);
 
+/**
+ * Refresh the production informations of all the inverters
+ */
+void inverter_refresh_all();
+
+/**
+ * Refresh production informations of a specified inverter
+ *
+ * @param Inverter inverter The inverter to refresh
+ */
+void inverter_refresh(Inverter *inverter);
+
 #endif // INVERTERS_H_INCLUDED

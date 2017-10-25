@@ -6,9 +6,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <pthread.h>
 #include "config.h"
 #include "utils.h"
 #include "inverters.h"
+#include "main.h"
+
+//Specify if the programm has to stop or not
+int stop_program = 0;
 
 int main(int argc,char *argv[]){
 
@@ -27,10 +33,36 @@ int main(int argc,char *argv[]){
     //Inform user
     printf("The application is ready.\n");
 
-    //Refresh the procution informations of all the inverters
-    inverter_refresh_all();
+    //Create client refresh thread
+    pthread_t client_refresh_thread;
+    if(pthread_create(&client_refresh_thread, NULL, *client_thread, NULL))
+        report_error("Coudln't create client refresh thread !", 1);
+
 
     //Display in a textual way the total productions
     display_text_production_values();
+
+
+
+}
+
+//Automated refresh client thread
+void *client_thread(void *param){
+
+    //Avoid errors
+    (void) param;
+
+    //This is a loop
+    while(stop_program == 0){
+
+        //Refresh the procution informations of all the inverters
+        inverter_refresh_all();
+
+        //Make a break
+        sleep(BREAK_BETWEEN_REFRESH);
+    }
+
+    //Quit thread
+    pthread_exit(EXIT_SUCCESS);
 
 }

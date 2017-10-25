@@ -11,14 +11,17 @@
 	<netinet/in.h>
 	<netdb.h>
 
-1508938268 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/main.c
+1508939199 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/main.c
 	<stdio.h>
 	<stdlib.h>
+	<unistd.h>
+	<pthread.h>
 	"config.h"
 	"utils.h"
 	"inverters.h"
+	"main.h"
 
-1508656140 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/config.h
+1508938723 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/config.h
 
 1508925106 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.h
 	"lib/jsmn/jsmn.h"
@@ -31,11 +34,13 @@
 
 1508925173 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/inverters.h
 
-1508938234 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/inverters.c
+1508938284 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/inverters.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"lib/jsmn/jsmn.h"
 	"inverters.h"
 	"utils.h"
+
+1508939122 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/main.h
 

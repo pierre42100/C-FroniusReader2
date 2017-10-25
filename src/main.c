@@ -30,4 +30,7 @@ int main(int argc,char *argv[]){
     //Refresh the procution informations of all the inverters
     inverter_refresh_all();
 
+    //Display in a textual way the total productions
+    display_text_production_values();
+
 }

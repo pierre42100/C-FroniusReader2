@@ -223,5 +223,23 @@ void inverter_refresh(Inverter *inverter){
 
 //Display productions values as text in the terminal
 void display_text_production_values(){
+    int total_prod = 0;
 
+    //Process the list of inverters
+    Inverter *curr_inverter = last_inverter;
+
+    while(curr_inverter != NULL){
+
+        //Display the inverter
+        printf("%s: \t %d\n", curr_inverter->name, curr_inverter->production);
+
+        //Increment total production
+        total_prod += curr_inverter->production;
+
+        //Take the next inverter
+        curr_inverter = curr_inverter->last_inverter;
+    }
+
+    //Print the total production
+    printf("Total production:\t %d\n", total_prod);
 }

@@ -2,18 +2,18 @@
 	
 
 	{
-		"name": "Inverter 2",
-		"url": "http://java.doc:81/qsd.jsson"
+		"name": "Inverter one",
+		"url": "http://devweb.local/playground/fronius_prod_files/file_1.json"
 	},
 
 	{
-		"name": "Inverter 3",
-		"url": "http://java.d:82/qsd.json"
+		"name": "Inverter three",
+		"url": "http://devweb.local/playground/fronius_prod_files/file_2.json"
 	},
 
 
 	{
-		"name": "hello",
-		"url": "http://test.loc/"
+		"name": "Other inverter",
+		"url": "http://devweb.local/playground/fronius_prod_files/file_3.json"
 	}
 ]

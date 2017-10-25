@@ -201,4 +201,27 @@ void inverter_refresh_all(){
 void inverter_refresh(Inverter *inverter){
     //Inform user
     printf("Refreshing production informations of %s.\n", inverter->name);
+
+    //Perform web request
+    char *server_response = web_request(1000, inverter->hostname, inverter->port, "GET", inverter->path, "");
+
+    //Check if we got a response or not
+    if(server_response == NULL){
+        //We set the production to -1 (default response)
+        inverter->production = -1;
+    }
+    else {
+
+        //Determine production value
+        inverter->production = determine_inverter_produced_value(server_response);
+
+        //We must free memory
+        free(server_response);
+
+    }
+}
+
+//Display productions values as text in the terminal
+void display_text_production_values(){
+
 }

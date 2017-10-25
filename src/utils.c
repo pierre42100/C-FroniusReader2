@@ -10,6 +10,9 @@
 #include <string.h>
 #include <math.h>
 #include "lib/jsmn/jsmn.h"
+#include <sys/socket.h> /* socket, connect */
+#include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
+#include <netdb.h> /* struct hostent, gethostbyname */
 
 //Report error
 void report_error(const char *message, int quit){
@@ -161,4 +164,194 @@ int extract_url_informations(const char *src_url, char *hostname, char *path, in
 
     //Success
     return 0;
+}
+
+/**
+ * Display an error
+ */
+void error(const char *msg) {
+    perror(msg);
+    //exit(0);
+}
+
+//Perform a web request
+char* web_request(int limit, const char *host, int port, const char *method, const char *path, const char *headers){
+
+    /* first where are we going to send it? */
+    int portno = port > 0 ? port : 80;
+
+    struct hostent *server;
+    struct sockaddr_in serv_addr;
+    int sockfd, bytes, sent, received, total, message_size;
+    char *message;
+    char *response;
+
+    //Allocate memory for response
+    response = malloc(limit * sizeof(char));
+
+    //Check memory was allocated
+    if(response == NULL){
+        error("Couldn't allocate memory to store response !");
+        return NULL;
+    }
+
+    /* How big is the message? */
+    message_size=0;
+    if(!strcmp(method,"GET"))
+    {
+        message_size+=strlen("%s %s%s%s HTTP/1.0\r\n");        /* method         */
+        message_size+=strlen(path);                         /* path           */
+        message_size+=strlen("Host: \r\n");
+        message_size+=strlen(host);
+        message_size+=strlen(headers);                   /* headers        */
+        message_size+=(strlen("\r\n"))*6;
+        message_size+=strlen("\r\n");                          /* blank line     */
+    }
+
+    /* allocate space for the message */
+    message=malloc(message_size);
+
+    /* fill in the parameters */
+    if(!strcmp(method,"GET"))
+    {
+        sprintf(message,"%s %s HTTP/1.0\r\n",
+                method,               /* method         */
+                path);                /* path           */
+
+        //Add host
+        strcat(message, "Host: ");
+        strcat(message, host);
+        strcat(message, "\r\n");
+
+        strcat(message,"\r\n");                                /* blank line     */
+    }
+
+
+    /* What are we going to send? */
+    //printf("Request:\n%s\n",message);
+
+    /* create the socket */
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0){
+        error("ERROR opening socket");
+        return NULL;
+    }
+
+    /* lookup the ip address */
+    server = gethostbyname(host);
+    if (server == NULL){
+        error("ERROR, no such host");
+        return NULL;
+    }
+
+    /* fill in the structure */
+    memset(&serv_addr,0,sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(portno);
+    memcpy(&serv_addr.sin_addr.s_addr,server->h_addr,server->h_length);
+
+    /* connect the socket */
+    if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0){
+        error("ERROR connecting");
+        return NULL;
+    }
+
+    /* send the request */
+    total = strlen(message);
+    sent = 0;
+    do {
+        bytes = write(sockfd,message+sent,total-sent);
+        if (bytes < 0)
+            error("ERROR writing message to socket");
+        if (bytes == 0)
+            break;
+        sent+=bytes;
+    } while (sent < total);
+
+    /* receive the response */
+    //memset(response,0,sizeof(response));
+    total = limit-1;
+    received = 0;
+    do {
+        bytes = read(sockfd,response+received,total-received);
+        if (bytes < 0)
+            error("ERROR reading response from socket");
+        if (bytes == 0)
+            break;
+        received+=bytes;
+
+    } while (received < total);
+
+    //Check if the response it too high
+    if (received == total)
+        fprintf(stderr, "Warning : response is too high to be completely stored! \n");
+
+    /* close the socket */
+    close(sockfd);
+
+    //Free memory
+    free(message);
+
+    //Return response
+    return response;
+}
+
+//Extract the production of an inverter from the response JSON file
+int determine_inverter_produced_value(const char *response){
+
+    //Create variables
+    int i, j;
+    char value[10];
+
+    //Parse the file
+    int foundLevel = 0;
+
+    for(i = 0; response[i] != '\0'; i++){
+
+        //Check to which level we can go
+        if(
+            (foundLevel == 0 && response[i] == '"') ||
+            (foundLevel == 1 && response[i] == 'P') ||
+            (foundLevel == 2 && response[i] == '_') ||
+            (foundLevel == 3 && response[i] == 'P') ||
+            (foundLevel == 4 && response[i] == 'V') ||
+            (foundLevel == 5 && response[i] == '"') ||
+            (foundLevel == 6 && response[i] == ' ') ||
+            (foundLevel == 7 && response[i] == ':') ||
+            (foundLevel == 8 && response[i] == ' ')
+        )
+            //Increase level
+            foundLevel++;
+
+        //Else we fall back to the first level
+        else
+            foundLevel = 0;
+
+        //Check if we reached the last level
+        if(foundLevel == 9){
+            //Then we can quit loop
+            i++;
+            break;
+        }
+
+    }
+
+    //Check if we managed to go to the last level
+    if(foundLevel != 9){
+        //An error occured
+        return -1; //Couldn't get a value
+    }
+
+    //Extract the value from the array
+    for(j = 0; response[i] != ','; j++){
+        value[j] = response[i];
+        value[j + 1] = '\0';
+
+        //Increase i
+        i++;
+
+    }
+
+    //Return result
+    return atoi(value);
 }

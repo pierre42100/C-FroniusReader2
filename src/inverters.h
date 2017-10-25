@@ -55,4 +55,9 @@ void inverter_refresh_all();
  */
 void inverter_refresh(Inverter *inverter);
 
+/**
+ * Display the productions values within the terminal
+ */
+void display_text_production_values();
+
 #endif // INVERTERS_H_INCLUDED

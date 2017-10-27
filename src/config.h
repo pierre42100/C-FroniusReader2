@@ -18,6 +18,11 @@
 #define BREAK_BETWEEN_REFRESH 20
 
 /**
+ * Windows width
+ */
+#define WINDOW_WIDTH 310
+
+/**
  * Path to the font file
  */
 #define PATH_FONT_FILE "res/UbuntuMono-B.ttf"
@@ -25,7 +30,7 @@
 /**
  * Size of the characters of the rendered text
  */
-#define SIZE_CHARACTERS 32
+#define SIZE_CHARACTERS 30
 
 /**
  * Name of the "total" inverter

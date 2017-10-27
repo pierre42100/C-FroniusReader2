@@ -16,6 +16,8 @@ static SDL_Window *window = NULL;
 static TTF_Font *font = NULL;
 static SDL_Texture *background_texture = NULL;
 
+static SDL_Color white = {255, 255, 255, 1};
+
 //Initializate User Interface
 int ui_init(){
 
@@ -39,7 +41,7 @@ int ui_init(){
     int number_inverters = 0;
     get_informations_inverters_name(&inverter_name_length, &number_inverters);
     int window_height = number_inverters*TTF_FontHeight(font);
-    int window_width = SIZE_CHARACTERS*(inverter_name_length+7);
+    int window_width = WINDOW_WIDTH;
 
     //Create a window & its renderer
     if(SDL_CreateWindowAndRenderer(window_width, window_height, SDL_WINDOWPOS_CENTERED, &window, &renderer) != 0)
@@ -93,9 +95,28 @@ int ui_init_background_texture(int w, int h){
     char* *inverters_name = get_inverters_name(&num_names);
 
     //Process each inverter name
-    for(int i = 0; i < num_names-1; i++){
-        if(inverters_name[i] != NULL)
+    for(int i = 0; i < num_names; i++){
+        if(inverters_name[i] != NULL){
+
+            //Write inverter name on texture
             printf("Inverter name: %s\n", inverters_name[i]);
+            SDL_Surface *rendered_surface = TTF_RenderText_Blended(font, inverters_name[i], white);
+
+            if(rendered_surface == NULL)
+                report_error("Error while rendering text!", 1);
+
+            //Convert surface into texture
+            SDL_Texture *rendered_texture = SDL_CreateTextureFromSurface(renderer, rendered_surface);
+
+            //Copy the newly created texture on the background texture
+            SDL_Rect dest = {0, i*TTF_FontHeight(font), rendered_surface->w, rendered_surface->h};
+            SDL_RenderCopy(renderer, rendered_texture, NULL, &dest);
+
+            //Free memory
+            SDL_DestroyTexture(rendered_texture);
+            SDL_FreeSurface(rendered_surface);
+
+        }
     }
 
     //Free memory

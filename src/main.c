@@ -43,7 +43,7 @@ int main(int argc,char *argv[]){
     //Inform user
     printf("The application is ready.\n");
 
-    sleep(5);
+    sleep(25);
 
     //Quit ui
     ui_quit();

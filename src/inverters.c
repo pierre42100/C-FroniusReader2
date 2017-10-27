@@ -278,11 +278,16 @@ char** get_inverters_name(int *num_names){
     get_informations_inverters_name(&name_length, &number_inverters);
 
     //Include the "total" inverter in the list
-    number_inverters++;
+    //number_inverters++; //Already included in get_informations_inverters_name
 
     //Initializate name array
     char* *names = NULL;
     names = malloc(number_inverters * sizeof(char *));
+
+    //Make sure all the values are set to NULL
+    for(int i = 0; i < number_inverters; i++){
+        names[i] = NULL;
+    }
 
     //Process each inverter
     Inverter *curr_inverter = last_inverter;
@@ -292,7 +297,7 @@ char** get_inverters_name(int *num_names){
 
         //Allocate memory
         names[count] = NULL;
-        names[count] = malloc(sizeof(char) * strlen(curr_inverter->name));
+        names[count] = malloc(sizeof(char) * (strlen(curr_inverter->name)+1));
         if(names[count] == NULL)
             report_error("Error in memory allocation!", 1);
 
@@ -306,7 +311,7 @@ char** get_inverters_name(int *num_names){
     }
 
     //Process the "total" inverter
-    names[count] = malloc(strlen(TOTAL_INVERTER_NAME)*sizeof(char));
+    names[count] = malloc((strlen(TOTAL_INVERTER_NAME)+1)*sizeof(char));
     strcpy(names[count], TOTAL_INVERTER_NAME);
 
     *num_names = number_inverters;

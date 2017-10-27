@@ -16,6 +16,7 @@
 				</Compiler>
 				<Linker>
 					<Add library="/usr/lib/x86_64-linux-gnu/libpthread.so" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libSDL2_ttf-2.0.so" />
 				</Linker>
 			</Target>
 			<Target title="Release">

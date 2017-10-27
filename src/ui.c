@@ -93,7 +93,7 @@ int ui_init_background_texture(int w, int h){
     char* *inverters_name = get_inverters_name(&num_names);
 
     //Process each inverter name
-    for(int i = 0; i < num_names; i++){
+    for(int i = 0; i < num_names-1; i++){
         if(inverters_name[i] != NULL)
             printf("Inverter name: %s\n", inverters_name[i]);
     }

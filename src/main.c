@@ -71,4 +71,6 @@ void *client_thread(void *param){
     //Quit thread
     pthread_exit(EXIT_SUCCESS);
 
+    //Return null result
+    return NULL;
 }

@@ -4,6 +4,7 @@
  * @author Pierre HUBERT
  */
 
+#include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -43,13 +44,29 @@ int main(int argc,char *argv[]){
     //Inform user
     printf("The application is ready.\n");
 
-    //Display production informations
-    ui_display_production();
+    SDL_Event event;
 
-    sleep(25);
+    while(stop_program != 1){
+
+        //Display production informations
+        ui_display_production();
+
+        //Make a break
+        SDL_WaitEventTimeout(&event, TIME_BETWEEN_SCREEN_REFRESH-0.5);
+
+        //Check if the program must be close
+        if(event.type == SDL_QUIT)
+            stop_program = 1;
+
+        //Additional break
+        sleep(0.5);
+    }
 
     //Quit ui
     ui_quit();
+
+    //Programm execution is a success
+    exit(EXIT_SUCCESS);
 }
 
 //Automated refresh client thread

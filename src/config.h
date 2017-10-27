@@ -13,9 +13,14 @@
 #define PATH_CONFIG_INVERTERS "config.json"
 
 /**
- * The time of th break between values refresh (in seconds)
+ * The time of th break between values refresh (in seconds) (requests on server)
  */
-#define BREAK_BETWEEN_REFRESH 20
+#define BREAK_BETWEEN_REFRESH 1
+
+/**
+ * Time between two screen refresh (in seconds)
+ */
+#define TIME_BETWEEN_SCREEN_REFRESH 2
 
 /**
  * Windows width

@@ -164,7 +164,7 @@ void ui_display_production(){
             continue;
 
         //Convert production from integer to string
-        int size_prod = floor(log10(production_values[i])) + 2;
+        int size_prod = floor(log10(production_values[i] == 0 ? 1 : production_values[i])) + 1;
         char *production = NULL;
         production = malloc(size_prod*sizeof(char));
         if(production == NULL)

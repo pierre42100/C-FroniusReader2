@@ -204,7 +204,8 @@ void inverter_refresh(Inverter *inverter){
     printf("Refreshing production informations of %s.\n", inverter->name);
 
     //Perform web request
-    char *server_response = web_request(1000, inverter->hostname, inverter->port, "GET", inverter->path, "");
+    char *server_response = NULL;
+    server_response = web_request(1000, inverter->hostname, inverter->port, "GET", inverter->path, "");
 
     //Check if we got a response or not
     if(server_response == NULL){
@@ -218,7 +219,6 @@ void inverter_refresh(Inverter *inverter){
 
         //We must free memory
         free(server_response);
-
     }
 }
 
@@ -338,10 +338,11 @@ int *get_all_inverters_production(){
     while(curr_inverter != NULL){
 
         //Save the production value
+        production_values[count] = curr_inverter->production;
         if(curr_inverter->production > 0){
             total_production += curr_inverter->production;
-            production_values[count] = curr_inverter->production;
         }
+
 
         //Go to the next inverter
         count++;

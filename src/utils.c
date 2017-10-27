@@ -190,14 +190,6 @@ char* web_request(int limit, const char *host, int port, const char *method, con
     char *message;
     char *response;
 
-    //Allocate memory for response
-    response = malloc(limit * sizeof(char));
-
-    //Check memory was allocated
-    if(response == NULL){
-        error("Couldn't allocate memory to store response !");
-        return NULL;
-    }
 
     /* How big is the message? */
     message_size=0;
@@ -271,6 +263,15 @@ char* web_request(int limit, const char *host, int port, const char *method, con
             break;
         sent+=bytes;
     } while (sent < total);
+
+    //Allocate memory for response
+    response = malloc(limit * sizeof(char));
+
+    //Check memory was allocated
+    if(response == NULL){
+        error("Couldn't allocate memory to store response !");
+        return NULL;
+    }
 
     /* receive the response */
     //memset(response,0,sizeof(response));

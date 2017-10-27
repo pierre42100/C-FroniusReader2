@@ -14,6 +14,6 @@
 
 	{
 		"name": "Other inverter",
-		"url": "http://devweb.local/playground/fronius_prod_files/file_3.json"
+		"url": "http://devweb.local:81/playground/fronius_prod_files/file_3.json"
 	}
 ]

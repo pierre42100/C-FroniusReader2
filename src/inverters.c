@@ -9,6 +9,7 @@
 #include <string.h>
 #include "lib/jsmn/jsmn.h"
 #include "inverters.h"
+#include "config.h"
 #include "utils.h"
 
 //Last inverter
@@ -242,4 +243,72 @@ void display_text_production_values(){
 
     //Print the total production
     printf("Total production:\t %d\n", total_prod);
+}
+
+//Get informations about the inverters name and length
+void get_informations_inverters_name(int *name_length, int *number_inverters){
+
+    //Inital length
+    *name_length = strlen(TOTAL_INVERTER_NAME);
+    *number_inverters = 1;
+
+    //Process inverter list
+    Inverter *current_inverter = last_inverter;
+
+    while(current_inverter != NULL){
+
+        *number_inverters = *number_inverters+1;
+
+        int inverter_name_length = strlen(current_inverter->name);
+        if(inverter_name_length > *name_length)
+            *name_length = inverter_name_length;
+
+        //Go to the next inverter
+        current_inverter = current_inverter->last_inverter;
+    }
+
+}
+
+//Get the name of all the inverters
+char** get_inverters_name(int *num_names){
+
+    //Get the number of inverters
+    int number_inverters = 0;
+    int name_length = 0;
+    get_informations_inverters_name(&name_length, &number_inverters);
+
+    //Include the "total" inverter in the list
+    number_inverters++;
+
+    //Initializate name array
+    char* *names = NULL;
+    names = malloc(number_inverters * sizeof(char *));
+
+    //Process each inverter
+    Inverter *curr_inverter = last_inverter;
+    int count = 0;
+
+    while(curr_inverter != NULL){
+
+        //Allocate memory
+        names[count] = NULL;
+        names[count] = malloc(sizeof(char) * strlen(curr_inverter->name));
+        if(names[count] == NULL)
+            report_error("Error in memory allocation!", 1);
+
+        //Copy inverter name in the new area
+        strcpy(names[count], curr_inverter->name);
+
+        //Go to the next inverter
+        curr_inverter = curr_inverter->last_inverter;
+        count++;
+
+    }
+
+    //Process the "total" inverter
+    names[count] = malloc(strlen(TOTAL_INVERTER_NAME)*sizeof(char));
+    strcpy(names[count], TOTAL_INVERTER_NAME);
+
+    *num_names = number_inverters;
+    return names;
 }

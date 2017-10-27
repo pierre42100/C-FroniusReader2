@@ -11,6 +11,7 @@
 #include "config.h"
 #include "utils.h"
 #include "inverters.h"
+#include "ui.h"
 #include "main.h"
 
 //Specify if the programm has to stop or not
@@ -30,20 +31,22 @@ int main(int argc,char *argv[]){
     //Remove configuration string
     free(config_content);
 
-    //Inform user
-    printf("The application is ready.\n");
-
     //Create client refresh thread
     pthread_t client_refresh_thread;
     if(pthread_create(&client_refresh_thread, NULL, *client_thread, NULL))
         report_error("Coudln't create client refresh thread !", 1);
 
+    //Initializate User interface
+    if(ui_init() < 0)
+        report_error("Couldn't initializate User Interface!", 1);
 
-    //Display in a textual way the total productions
-    display_text_production_values();
+    //Inform user
+    printf("The application is ready.\n");
 
+    sleep(5);
 
-
+    //Quit ui
+    ui_quit();
 }
 
 //Automated refresh client thread
@@ -57,6 +60,9 @@ void *client_thread(void *param){
 
         //Refresh the procution informations of all the inverters
         inverter_refresh_all();
+
+        //Display in a textual way the total productions
+        display_text_production_values();
 
         //Make a break
         sleep(BREAK_BETWEEN_REFRESH);

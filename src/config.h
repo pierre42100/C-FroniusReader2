@@ -17,4 +17,19 @@
  */
 #define BREAK_BETWEEN_REFRESH 20
 
+/**
+ * Path to the font file
+ */
+#define PATH_FONT_FILE "res/UbuntuMono-B.ttf"
+
+/**
+ * Size of the characters of the rendered text
+ */
+#define SIZE_CHARACTERS 32
+
+/**
+ * Name of the "total" inverter
+ */
+#define TOTAL_INVERTER_NAME "Total"
+
 #endif // CONFIG_H_INCLUDED

@@ -1,5 +1,6 @@
 # depslib dependency file v1.0
-1508925087 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.c
+1509086745 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.c
+	<SDL2/SDL.h>
 	<stdio.h>
 	<stdlib.h>
 	<fcntl.h>
@@ -11,7 +12,7 @@
 	<netinet/in.h>
 	<netdb.h>
 
-1508939199 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/main.c
+1509091682 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/main.c
 	<stdio.h>
 	<stdlib.h>
 	<unistd.h>
@@ -19,9 +20,10 @@
 	"config.h"
 	"utils.h"
 	"inverters.h"
+	"ui.h"
 	"main.h"
 
-1508938723 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/config.h
+1509094483 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/config.h
 
 1508925106 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/utils.h
 	"lib/jsmn/jsmn.h"
@@ -32,15 +34,26 @@
 1493628247 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/lib/jsmn/jsmn.h
 	<stddef.h>
 
-1508925173 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/inverters.h
+1509094030 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/inverters.h
 
-1508938284 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/inverters.c
+1509094747 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/inverters.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"lib/jsmn/jsmn.h"
 	"inverters.h"
+	"config.h"
 	"utils.h"
 
 1508939122 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/main.h
+
+1509091781 /home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/ui.h
+
+1509094759 source:/home/pierre/Documents/projets_C/codeblocks/fronius_reader_v2/project/src/ui.c
+	<SDL2/SDL.h>
+	<SDL2/SDL_ttf.h>
+	"config.h"
+	"utils.h"
+	"inverters.h"
+	"ui.h"
 

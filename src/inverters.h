@@ -60,4 +60,22 @@ void inverter_refresh(Inverter *inverter);
  */
 void display_text_production_values();
 
+/**
+ * Retrieve informations about the inverters name and number
+ *
+ * @param int *name_length This variable will be filled with the
+ * biggest name length of the inverters
+ * @param int *number_inverter This variable will be filled with
+ * the number of inverters
+ */
+void get_informations_inverters_name(int *name_length, int *number_inverters);
+
+/**
+ * Returns the name of all the inverters
+ *
+ * @param int *num_names The number of names of the array
+ * @return char[] An array with all the inverters name
+ */
+char** get_inverters_name(int *num_names);
+
 #endif // INVERTERS_H_INCLUDED

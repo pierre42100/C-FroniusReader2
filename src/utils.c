@@ -3,6 +3,7 @@
  *
  * @author Pierre HUBERT
  */
+#include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -19,6 +20,9 @@ void report_error(const char *message, int quit){
 
     //Display error
     fprintf(stderr, "An error occured: %s\n", message);
+
+    //Display SDL error
+    fprintf(stderr, "SDL error: %s\n", SDL_GetError());
 
     //Quit program if required
     quit == 1 ? exit(EXIT_FAILURE) : 0;

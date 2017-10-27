@@ -43,6 +43,9 @@ int main(int argc,char *argv[]){
     //Inform user
     printf("The application is ready.\n");
 
+    //Display production informations
+    ui_display_production();
+
     sleep(25);
 
     //Quit ui

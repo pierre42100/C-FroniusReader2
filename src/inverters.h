@@ -74,8 +74,15 @@ void get_informations_inverters_name(int *name_length, int *number_inverters);
  * Returns the name of all the inverters
  *
  * @param int *num_names The number of names of the array
- * @return char[] An array with all the inverters name
+ * @return char** An array with all the inverters name
  */
 char** get_inverters_name(int *num_names);
+
+/**
+ * Return the production informations of all the inverters
+ *
+ * @return int* An array with all the production values
+ */
+int *get_all_inverters_production();
 
 #endif // INVERTERS_H_INCLUDED

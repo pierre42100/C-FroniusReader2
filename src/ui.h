@@ -31,7 +31,15 @@ int ui_init_background_texture(int w, int h);
 
 /**
  * Reset screen : display only the background
+ *
+ * @param int refresh_render Specify wether the renderer
+ * should be applyed to the screen or not
  */
-void ui_reset_screen();
+void ui_reset_screen(int refresh_render);
+
+/**
+ * Display production informations on the screen
+ */
+void ui_display_production();
 
 #endif // UI_H_INCLUDED

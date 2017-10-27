@@ -6,6 +6,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <math.h>
 #include "config.h"
 #include "utils.h"
 #include "inverters.h"
@@ -15,6 +16,7 @@ static SDL_Renderer *renderer = NULL;
 static SDL_Window *window = NULL;
 static TTF_Font *font = NULL;
 static SDL_Texture *background_texture = NULL;
+static int number_inverters = 0;
 
 static SDL_Color white = {255, 255, 255, 1};
 
@@ -38,7 +40,7 @@ int ui_init(){
 
     //Retrieve informations about the inverters to determine window dimensions
     int inverter_name_length = 0;
-    int number_inverters = 0;
+    //int number_inverters = 0;
     get_informations_inverters_name(&inverter_name_length, &number_inverters);
     int window_height = number_inverters*TTF_FontHeight(font);
     int window_width = WINDOW_WIDTH;
@@ -52,7 +54,7 @@ int ui_init(){
         return -1;
 
     //Reset background screen
-    ui_reset_screen();
+    ui_reset_screen(1);
 
     return 0;
 }
@@ -99,7 +101,7 @@ int ui_init_background_texture(int w, int h){
         if(inverters_name[i] != NULL){
 
             //Write inverter name on texture
-            printf("Inverter name: %s\n", inverters_name[i]);
+            //printf("Inverter name: %s\n", inverters_name[i]);
             SDL_Surface *rendered_surface = TTF_RenderText_Blended(font, inverters_name[i], white);
 
             if(rendered_surface == NULL)
@@ -124,7 +126,7 @@ int ui_init_background_texture(int w, int h){
         if(inverters_name[i] != NULL)
             free(inverters_name[i]);
     }
-
+    free(inverters_name);
 
     //Reset renderer target
     SDL_SetRenderTarget(renderer, NULL);
@@ -134,8 +136,59 @@ int ui_init_background_texture(int w, int h){
 }
 
 //Reset background
-void ui_reset_screen(){
+void ui_reset_screen(int refresh_render){
     SDL_SetRenderTarget(renderer, NULL);
     SDL_RenderCopy(renderer, background_texture, NULL, NULL);
+
+    if(refresh_render == 1)
+        SDL_RenderPresent(renderer);
+}
+
+//Display production informations on the screen
+void ui_display_production(){
+
+    //Reset background
+    ui_reset_screen(0);
+
+    //Make the renderer as the target
+    SDL_SetRenderTarget(renderer, NULL);
+
+    //Get production informations
+    int *production_values = get_all_inverters_production();
+
+    //Process values
+    for(int i = 0; i < number_inverters; i++){
+
+        //Check if the production is negative or not
+        if(production_values[i] < 0)
+            continue;
+
+        //Convert production from integer to string
+        int size_prod = floor(log10(production_values[i])) + 2;
+        char *production = NULL;
+        production = malloc(size_prod*sizeof(char));
+        if(production == NULL)
+            report_error("Error while allocating memory !", 1);
+        sprintf(production, "%d", production_values[i]);
+
+        //Render production
+        SDL_Surface *rendered_surface = NULL;
+        rendered_surface = TTF_RenderText_Solid(font, production, white);
+
+        //Transform the surface into a texture
+        SDL_Texture *rendered_texture = NULL;
+        rendered_texture = SDL_CreateTextureFromSurface(renderer, rendered_surface);
+
+        //Apply the texture
+        SDL_Rect destination = {WINDOW_WIDTH-rendered_surface->w, i*TTF_FontHeight(font), rendered_surface->w, rendered_surface->h};
+        SDL_RenderCopy(renderer, rendered_texture, NULL, &destination);
+
+        //Free memory
+        free(production);
+        SDL_FreeSurface(rendered_surface);
+        SDL_DestroyTexture(rendered_texture);
+    }
+
+    //Refresh renderer
     SDL_RenderPresent(renderer);
 }

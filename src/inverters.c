@@ -317,3 +317,40 @@ char** get_inverters_name(int *num_names){
     *num_names = number_inverters;
     return names;
 }
+
+//Return the production informations of all the inverters
+int *get_all_inverters_production(){
+
+    //Get the number of inverters
+    int number_inverters = 0;
+    int name_length = 0;
+    get_informations_inverters_name(&name_length, &number_inverters);
+
+    int total_production = 0;
+    int count = 0;
+
+    //Allocate memory
+    int *production_values = NULL;
+    production_values = malloc(number_inverters*sizeof(int));
+
+    //Process the list of inverters
+    Inverter *curr_inverter = last_inverter;
+    while(curr_inverter != NULL){
+
+        //Save the production value
+        if(curr_inverter->production > 0){
+            total_production += curr_inverter->production;
+            production_values[count] = curr_inverter->production;
+        }
+
+        //Go to the next inverter
+        count++;
+        curr_inverter = curr_inverter->last_inverter;
+    }
+
+    //Add the total production
+    production_values[count] = total_production;
+
+    //Return result
+    return production_values;
+}

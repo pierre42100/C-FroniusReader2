@@ -191,4 +191,7 @@ void ui_display_production(){
 
     //Refresh renderer
     SDL_RenderPresent(renderer);
+
+    //Free memory
+    free(production_values);
 }

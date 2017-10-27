@@ -230,6 +230,7 @@ char* web_request(int limit, const char *host, int port, const char *method, con
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0){
         error("ERROR opening socket");
+        free(message);
         return NULL;
     }
 
@@ -237,6 +238,7 @@ char* web_request(int limit, const char *host, int port, const char *method, con
     server = gethostbyname(host);
     if (server == NULL){
         error("ERROR, no such host");
+        free(message);
         return NULL;
     }
 
@@ -249,6 +251,8 @@ char* web_request(int limit, const char *host, int port, const char *method, con
     /* connect the socket */
     if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0){
         error("ERROR connecting");
+        free(message);
+        close(sockfd);
         return NULL;
     }
 
@@ -270,6 +274,8 @@ char* web_request(int limit, const char *host, int port, const char *method, con
     //Check memory was allocated
     if(response == NULL){
         error("Couldn't allocate memory to store response !");
+        free(message);
+        close(sockfd);
         return NULL;
     }
 

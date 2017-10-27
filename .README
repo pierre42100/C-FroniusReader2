@@ -1,0 +1,7 @@
+# Fronius Reader V2
+
+This project connect to your Fronius Symo equipments and returns their production values. It render it on a small window.
+
+The font used in this project is an Ubuntu Font, which is protected and owned by the Canonical Group.
+
+The application is easily configurable through the configuration file called "config.json"
